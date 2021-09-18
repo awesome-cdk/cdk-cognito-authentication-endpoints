@@ -8,3 +8,5 @@ node_modules
 cdk.out
 ./dist
 *.tgz
+
+.DS_Store
