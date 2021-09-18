@@ -6,7 +6,7 @@ AWS CDK construct for creating API Gateway endpoints for registration and login,
 
 ```typescript
 new CognitoAuthEndpoints(this, 'CognitoAuthEndpoints', {
-    rootResource: api.root,
+    rootResource: restApi.root,
     userPool,
 });
 ```
