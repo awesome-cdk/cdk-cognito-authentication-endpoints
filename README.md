@@ -10,3 +10,23 @@ new CognitoAuthEndpoints(this, 'CognitoAuthEndpoints', {
     userPool,
 });
 ```
+
+The final result will be, the following API endpoints will be created at the root of your API Gateway:
+
+`POST /register`
+
+```json
+{
+  "username": "john",
+  "password": "StrongPassword!1!"
+}
+```
+
+`POST /login`
+
+```json
+{
+  "username": "john",
+  "password": "StrongPassword!1!"
+}
+```
