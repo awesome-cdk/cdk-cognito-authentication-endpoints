@@ -1,6 +1,7 @@
 {
   "name": "@awesome-cdk/cdk-cognito-authentication-endpoints",
   "version": "0.0.1",
+  "private": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -10,6 +11,9 @@
     "watch:tsc": "npx tsc -w",
     "watch:nodemon": "nodemon --watch dist --exec 'npm run create-npm-tgz'",
     "create-npm-tgz": "npm pack --pack-destination ./../../"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "devDependencies": {
     "@aws-cdk/assert": "^1.123.0",
