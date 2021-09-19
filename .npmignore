@@ -8,3 +8,6 @@ cdk.out
 !./lib/lambdas/*.ts
 
 example/**/*
+
+.idea
+.github

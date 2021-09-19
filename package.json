@@ -10,7 +10,7 @@
     "test": "jest",
     "watch:tsc": "npx tsc -w",
     "watch:nodemon": "nodemon --watch dist --exec 'npm run create-npm-tgz'",
-    "create-npm-tgz": "npm pack --pack-destination ./../../"
+    "create-npm-tgz": "npm pack --pack-destination ./dist/"
   },
   "publishConfig": {
     "access": "public"
