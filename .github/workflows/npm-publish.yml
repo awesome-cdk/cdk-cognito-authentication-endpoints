@@ -7,6 +7,10 @@ on:
   release:
     types: [created]
 
+defaults:
+  run:
+    working-directory: packages/CognitoAuthEndpoints
+
 jobs:
   build:
     runs-on: ubuntu-latest
