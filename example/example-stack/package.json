@@ -25,6 +25,6 @@
     "@aws-cdk/aws-cognito": "^1.123.0",
     "@aws-cdk/core": "^1.123.0",
     "source-map-support": "^0.5.20",
-    "@awesome-cdk/cdk-cognito-authentication-endpoints": "file:./../../awesome-cdk-cdk-cognito-authentication-endpoints-0.0.1.tgz"
+    "@awesome-cdk/cdk-cognito-authentication-endpoints": "file:./../../packages/CognitoAuthEndpoints"
   }
 }

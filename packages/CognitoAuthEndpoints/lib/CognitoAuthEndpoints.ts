@@ -1,6 +1,5 @@
 import {Construct} from "@aws-cdk/core";
 import {IResource, LambdaIntegration} from "@aws-cdk/aws-apigateway";
-import {NodejsFunction} from "@aws-cdk/aws-lambda-nodejs";
 import * as path from "path";
 import {IUserPool, UserPoolClient} from "@aws-cdk/aws-cognito";
 import {Code, Function, Runtime} from "@aws-cdk/aws-lambda";
@@ -29,7 +28,7 @@ export class CognitoAuthEndpoints extends Construct {
         );
         lambda.addEnvironment('USER_POOL_ID', this.props.userPool.userPoolId);
 
-        // Create a Cognito userpool client
+        // Create a Cognito UserPoolClient with "ADMIN_USER_PASSWORD_AUTH" AuthFlow enabled
         const userPoolClient = new UserPoolClient(this, 'UserPoolClient', {
             userPool: this.props.userPool,
             authFlows: {

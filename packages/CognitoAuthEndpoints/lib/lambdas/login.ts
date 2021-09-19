@@ -21,12 +21,12 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider();
 
     // Create the user in the UserPool
-    const creationResult = await cognitoIdentityServiceProvider
+    await cognitoIdentityServiceProvider
         .adminInitiateAuth({
             UserPoolId,
             AuthFlow: "ADMIN_USER_PASSWORD_AUTH",
             AuthParameters: {},
-            ClientId: ""
+            ClientId
         })
         .promise();
 

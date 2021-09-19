@@ -1,6 +1,21 @@
 import {APIGatewayProxyHandler} from "aws-lambda";
 import {CognitoIdentityServiceProvider} from "aws-sdk";
 
+async function userExists(cognitoIdentityServiceProvider: CognitoIdentityServiceProvider, UserPoolId: string, username: string): Promise<boolean> {
+    try {
+        const existingUser = await cognitoIdentityServiceProvider.adminGetUser({
+            UserPoolId,
+            Username: username,
+        }).promise();
+        return !!existingUser.UserCreateDate;
+    } catch (e: any) {
+        if ((<any>e).code === 'UserNotFoundException') {
+            return false;
+        }
+        throw e;
+    }
+}
+
 export const handler: APIGatewayProxyHandler = async (event) => {
     const body: {
         username: string,
@@ -19,8 +34,19 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     const UserPoolId = process.env.USER_POOL_ID as string;
     const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider();
 
+    const exists = await userExists(cognitoIdentityServiceProvider, UserPoolId, body.username);
+
+    if (exists) {
+        return {
+            statusCode: 400,
+            body: JSON.stringify({
+                error: "This username already exists",
+            }),
+        };
+    }
+
     // Create the user in the UserPool
-    const creationResult = await cognitoIdentityServiceProvider
+    await cognitoIdentityServiceProvider
         .adminCreateUser({
             UserPoolId,
             Username: body.username,
