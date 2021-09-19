@@ -18,7 +18,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       # Upgrade npm version in package.json to the tag used in the release.
-      - run: npm version ${{ github.event.release.tag_name }}
+      - run: npm version ${{ github.event.release.tag_name }} --no-git-tag-version
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
@@ -36,7 +36,7 @@ jobs:
           registry-url: https://npm.pkg.github.com/
       - run: npm ci
       # Upgrade npm version in package.json to the tag used in the release.
-      - run: npm version ${{ github.event.release.tag_name }}
+      - run: npm version ${{ github.event.release.tag_name }} --no-git-tag-version
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
