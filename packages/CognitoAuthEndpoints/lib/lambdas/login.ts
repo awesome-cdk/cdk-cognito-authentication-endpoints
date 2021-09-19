@@ -21,19 +21,34 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider();
 
     // Create the user in the UserPool
-    await cognitoIdentityServiceProvider
+    const auth = await cognitoIdentityServiceProvider
         .adminInitiateAuth({
             UserPoolId,
             AuthFlow: "ADMIN_USER_PASSWORD_AUTH",
-            AuthParameters: {},
-            ClientId
+            AuthParameters: {
+                USERNAME: body.username,
+                PASSWORD: body.password,
+            },
+            ClientId,
         })
         .promise();
+
+    if (!auth.AuthenticationResult) {
+        return {
+            statusCode: 400,
+            body: JSON.stringify({
+                error: "Failed to authenticate user",
+            })
+        }
+    }
 
     return {
         statusCode: 200,
         body: JSON.stringify({
-            success: true,
+            idToken: auth.AuthenticationResult?.IdToken,
+            accessToken: auth.AuthenticationResult?.AccessToken,
+            refreshToken: auth.AuthenticationResult?.RefreshToken,
+            expiresAt: Math.round((new Date().getTime() / 1000) + auth.AuthenticationResult!.ExpiresIn!),
         }),
     }
 }
