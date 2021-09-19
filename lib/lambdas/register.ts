@@ -16,14 +16,28 @@ export const handler: APIGatewayProxyHandler = async (event) => {
         }
     }
 
-    const creationResult = await new CognitoIdentityServiceProvider()
+    const UserPoolId = process.env.USER_POOL_ID as string;
+    const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider();
+
+    // Create the user in the UserPool
+    const creationResult = await cognitoIdentityServiceProvider
         .adminCreateUser({
-            UserPoolId: process.env.USER_POOL_ID as string,
+            UserPoolId,
             Username: body.username,
+            MessageAction: "SUPPRESS",
+            TemporaryPassword: body.password,
         })
         .promise();
 
-    const username = creationResult.User?.Username;
+    // Force the password without asking the user to change it on first login
+    await cognitoIdentityServiceProvider
+        .adminSetUserPassword({
+            Username: body.username,
+            Password: body.password,
+            UserPoolId,
+            Permanent: true,
+        })
+        .promise();
 
     return {
         statusCode: 200,

@@ -1,15 +1,19 @@
 import * as cdk from '@aws-cdk/core';
+import {RemovalPolicy} from '@aws-cdk/core';
 import {RestApi} from "@aws-cdk/aws-apigateway";
 import {UserPool} from "@aws-cdk/aws-cognito";
 import {CognitoAuthEndpoints} from "@awesome-cdk/cdk-cognito-authentication-endpoints";
+
 
 export class TestStack extends cdk.Stack {
     constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
 
+        const removalPolicy = RemovalPolicy.DESTROY;
+
         const apiGateway = new RestApi(this, 'RestApi');
 
-        const userPool = new UserPool(this, 'UserPool');
+        const userPool = new UserPool(this, 'UserPool', {removalPolicy});
 
         const authResource = apiGateway.root.addResource('auth');
 

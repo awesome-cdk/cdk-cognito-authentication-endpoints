@@ -4,6 +4,7 @@ import {NodejsFunction} from "@aws-cdk/aws-lambda-nodejs";
 import * as path from "path";
 import {IUserPool} from "@aws-cdk/aws-cognito";
 import {Code, Function, Runtime} from "@aws-cdk/aws-lambda";
+import {ManagedPolicy} from "@aws-cdk/aws-iam";
 
 export class CognitoAuthEndpoints extends Construct {
 
@@ -23,6 +24,9 @@ export class CognitoAuthEndpoints extends Construct {
             runtime: Runtime.NODEJS_14_X,
             handler: "login.handler",
         });
+        lambda.role?.addManagedPolicy(
+            ManagedPolicy.fromAwsManagedPolicyName("AmazonCognitoPowerUser")
+        );
         lambda.addEnvironment('USER_POOL_ID', this.props.userPool.userPoolId);
         this.props.rootResource
             .addResource('login')
@@ -35,6 +39,9 @@ export class CognitoAuthEndpoints extends Construct {
             runtime: Runtime.NODEJS_14_X,
             handler: "register.handler",
         });
+        lambda.role?.addManagedPolicy(
+            ManagedPolicy.fromAwsManagedPolicyName("AmazonCognitoPowerUser")
+        );
         lambda.addEnvironment('USER_POOL_ID', this.props.userPool.userPoolId);
         this.props.rootResource
             .addResource('register')
