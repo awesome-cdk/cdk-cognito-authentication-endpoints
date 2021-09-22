@@ -16,9 +16,22 @@ jobs:
         with:
           node-version: 14
           registry-url: https://registry.npmjs.org/
+
+      # Cache NPM packages, until package-lock.json changes
+      - uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Install dependencies
       - run: npm ci
+
       # Upgrade npm version in package.json to the tag used in the release.
       - run: npm version ${{ github.event.release.tag_name }} --no-git-tag-version
+
+      # Publish to npmjs.com
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
