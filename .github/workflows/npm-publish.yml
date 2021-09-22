@@ -31,6 +31,9 @@ jobs:
       # Upgrade npm version in package.json to the tag used in the release.
       - run: npm version ${{ github.event.release.tag_name }} --no-git-tag-version
 
+      # Build the app
+      - run: npx tsc
+
       # Publish to npmjs.com
       - run: npm publish
         env:
@@ -50,6 +53,10 @@ jobs:
       - run: npm ci
       # Upgrade npm version in package.json to the tag used in the release.
       - run: npm version ${{ github.event.release.tag_name }} --no-git-tag-version
+
+      # Build the app
+      - run: npx tsc
+
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
