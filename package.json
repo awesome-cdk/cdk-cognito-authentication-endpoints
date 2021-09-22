@@ -15,6 +15,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+    "url": "https://github.com/awesome-cdk/cdk-cognito-authentication-endpoints"
+  },
   "devDependencies": {
     "@aws-cdk/assert": "^1.123.0",
     "@types/aws-lambda": "^8.10.83",

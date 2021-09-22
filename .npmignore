@@ -5,9 +5,9 @@
 .cdk.staging
 cdk.out
 
-!./lib/lambdas/*.ts
-
 example/**/*
 
 .idea
 .github
+
+*.tgz
