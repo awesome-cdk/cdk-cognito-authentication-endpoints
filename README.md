@@ -1,5 +1,7 @@
 # CDK Cognito Authentication Endpoints for API Gateway
 
+***CURRENTLY ONLY SUPPORTS AWS CDK v1. Open to contributions that port this to v2.***
+
 AWS CDK construct for creating API Gateway endpoints for registration and login, powered by AWS Cognito.
 
 ### Usage
